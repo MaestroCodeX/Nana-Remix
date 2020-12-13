@@ -258,9 +258,9 @@ async def gdrive_stuff(client, message):
                 await client.download_media(
                     message.reply_to_message.photo,
                     file_name="nana/downloads/" + nama,
-                    progress=lambda d, t: asyncio.get_event_loop().create_task(
-                        progressdl(d, t, message, c_time, "Downloading...")
-                    ),
+                    progress=lambda d, t: client.loop.create_task(
+                progressdl(d, t, message, c_time, "Downloading...")
+            ),
                 )
             elif message.reply_to_message.animation:
                 if message.reply_to_message.caption:
@@ -273,9 +273,9 @@ async def gdrive_stuff(client, message):
                 await client.download_media(
                     message.reply_to_message.animation,
                     file_name="nana/downloads/" + nama,
-                    progress=lambda d, t: asyncio.get_event_loop().create_task(
-                        progressdl(d, t, message, c_time, "Downloading...")
-                    ),
+                    progress=lambda d, t: client.loop.create_task(
+                progressdl(d, t, message, c_time, "Downloading...")
+            ),
                 )
             elif message.reply_to_message.video:
                 if message.reply_to_message.caption:
@@ -290,9 +290,9 @@ async def gdrive_stuff(client, message):
                 await client.download_media(
                     message.reply_to_message.video,
                     file_name="nana/downloads/" + nama,
-                    progress=lambda d, t: asyncio.get_event_loop().create_task(
-                        progressdl(d, t, message, c_time, "Downloading...")
-                    ),
+                    progress=lambda d, t: client.loop.create_task(
+                progressdl(d, t, message, c_time, "Downloading...")
+            ),
                 )
             elif message.reply_to_message.sticker:
                 if not message.reply_to_message.caption:
@@ -305,9 +305,9 @@ async def gdrive_stuff(client, message):
                 await client.download_media(
                     message.reply_to_message.sticker,
                     file_name="nana/downloads/" + nama,
-                    progress=lambda d, t: asyncio.get_event_loop().create_task(
-                        progressdl(d, t, message, c_time, "Downloading...")
-                    ),
+                    progress=lambda d, t: client.loop.create_task(
+                progressdl(d, t, message, c_time, "Downloading...")
+            ),
                 )
             elif message.reply_to_message.audio:
                 if message.reply_to_message.caption:
@@ -317,9 +317,9 @@ async def gdrive_stuff(client, message):
                 await client.download_media(
                     message.reply_to_message.audio,
                     file_name="nana/downloads/" + nama,
-                    progress=lambda d, t: asyncio.get_event_loop().create_task(
-                        progressdl(d, t, message, c_time, "Downloading...")
-                    ),
+                    progress=lambda d, t: client.loop.create_task(
+                progressdl(d, t, message, c_time, "Downloading...")
+            ),
                 )
             elif message.reply_to_message.voice:
                 if message.reply_to_message.caption:
@@ -329,18 +329,18 @@ async def gdrive_stuff(client, message):
                 await client.download_media(
                     message.reply_to_message.voice,
                     file_name="nana/downloads/" + nama,
-                    progress=lambda d, t: asyncio.get_event_loop().create_task(
-                        progressdl(d, t, message, c_time, "Downloading...")
-                    ),
+                    progress=lambda d, t: client.loop.create_task(
+                progressdl(d, t, message, c_time, "Downloading...")
+            ),
                 )
             elif message.reply_to_message.document:
                 nama = "{}".format(message.reply_to_message.document.file_name)
                 await client.download_media(
                     message.reply_to_message.document,
                     file_name="nana/downloads/" + nama,
-                    progress=lambda d, t: asyncio.get_event_loop().create_task(
-                        progressdl(d, t, message, c_time, "Downloading...")
-                    ),
+                    progress=lambda d, t: client.loop.create_task(
+                progressdl(d, t, message, c_time, "Downloading...")
+            ),
                 )
             else:
                 await edrep(message, text="Unknown file!")

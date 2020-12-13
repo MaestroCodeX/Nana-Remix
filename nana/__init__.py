@@ -20,7 +20,6 @@ from .startup.variable import get_var
 StartTime = time.time()
 
 
-
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     logging.error(

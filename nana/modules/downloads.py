@@ -7,11 +7,13 @@ import re
 import time
 import urllib.parse
 from random import choice
+from typing import Dict, Tuple
 
 import requests
 from bs4 import BeautifulSoup
 from pyDownload import Downloader
 from pyrogram import filters
+from pyrogram.types import Message
 
 from nana import app, Command, AdminSettings, edrep
 
@@ -47,18 +49,23 @@ androidfilehost.com`
 """
 
 
+
 @app.on_message(filters.user(AdminSettings) & filters.command("ls", Command))
 async def ls(_, message):
     args = message.text.split(None, 1)
     basepath = "nana/{}".format(args[1]) if len(args) == 2 else "nana/"
-    directory = ""
-    listfile = ""
-    for entry in os.listdir(basepath):
-        if os.path.isdir(os.path.join(basepath, entry)):
-            directory += "\n{}".format(entry)
-    for entry in os.listdir(basepath):
-        if os.path.isfile(os.path.join(basepath, entry)):
-            listfile += "\n{}".format(entry)
+    directory = "".join(
+        "\n{}".format(entry)
+        for entry in os.listdir(basepath)
+        if os.path.isdir(os.path.join(basepath, entry))
+    )
+
+    listfile = "".join(
+        "\n{}".format(entry)
+        for entry in os.listdir(basepath)
+        if os.path.isfile(os.path.join(basepath, entry))
+    )
+
     await edrep(
         message,
         text="**List directory :**`{}`\n**List file :**`{}`".format(
@@ -73,15 +80,17 @@ async def upload_file(client, message):
     if len(args) == 1:
         await edrep(message, text="usage : upload (path)")
         return
+    c_time = time.time()
     path = "nana/{}".format(args[1])
     try:
         await app.send_document(
             message.chat.id,
             path,
-            progress=lambda d, t: asyncio.get_event_loop().create_task(
-                progressdl(d, t, message, time.time(), "Uploading...")
+            progress=lambda d, t: client.loop.create_task(
+                progressdl(d, t, message, c_time, "Downloading...")
             ),
         )
+        
     except Exception as e:
         logging.error("Exception occured", exc_info=True)
         logging.error(e)
@@ -528,14 +537,13 @@ async def download_reply_nocall(client, message):
 
 
 async def download_file_from_tg(client, message):
-    start = int(time.time())
-    c_time = time.time()
+    c_time = int(time.time())
     name = await name_file(client, message)
     if message.reply_to_message.photo:
         await client.download_media(
             message.reply_to_message.photo,
             file_name="nana/downloads/" + name,
-            progress=lambda d, t: asyncio.get_event_loop().create_task(
+            progress=lambda d, t: client.loop.create_task(
                 progressdl(d, t, message, c_time, "Downloading...")
             ),
         )
@@ -543,7 +551,7 @@ async def download_file_from_tg(client, message):
         await client.download_media(
             message.reply_to_message.animation,
             file_name="nana/downloads/" + name,
-            progress=lambda d, t: asyncio.get_event_loop().create_task(
+            progress=lambda d, t: client.loop.create_task(
                 progressdl(d, t, message, c_time, "Downloading...")
             ),
         )
@@ -551,7 +559,7 @@ async def download_file_from_tg(client, message):
         await client.download_media(
             message.reply_to_message.video,
             file_name="nana/downloads/" + name,
-            progress=lambda d, t: asyncio.get_event_loop().create_task(
+            progress=lambda d, t: client.loop.create_task(
                 progressdl(d, t, message, c_time, "Downloading...")
             ),
         )
@@ -559,7 +567,7 @@ async def download_file_from_tg(client, message):
         await client.download_media(
             message.reply_to_message.sticker,
             file_name="nana/downloads/" + name,
-            progress=lambda d, t: asyncio.get_event_loop().create_task(
+            progress=lambda d, t: client.loop.create_task(
                 progressdl(d, t, message, c_time, "Downloading...")
             ),
         )
@@ -567,7 +575,7 @@ async def download_file_from_tg(client, message):
         await client.download_media(
             message.reply_to_message.audio,
             file_name="nana/downloads/" + name,
-            progress=lambda d, t: asyncio.get_event_loop().create_task(
+            progress=lambda d, t: client.loop.create_task(
                 progressdl(d, t, message, c_time, "Downloading...")
             ),
         )
@@ -575,7 +583,7 @@ async def download_file_from_tg(client, message):
         await client.download_media(
             message.reply_to_message.voice,
             file_name="nana/downloads/" + name,
-            progress=lambda d, t: asyncio.get_event_loop().create_task(
+            progress=lambda d, t: client.loop.create_task(
                 progressdl(d, t, message, c_time, "Downloading...")
             ),
         )
@@ -583,7 +591,7 @@ async def download_file_from_tg(client, message):
         await client.download_media(
             message.reply_to_message.document,
             file_name="nana/downloads/" + name,
-            progress=lambda d, t: asyncio.get_event_loop().create_task(
+            progress=lambda d, t: client.loop.create_task(
                 progressdl(d, t, message, c_time, "Downloading...")
             ),
         )
@@ -591,7 +599,7 @@ async def download_file_from_tg(client, message):
         await edrep(message, text="Unknown file!")
         return
     end = int(time.time())
-    times = await time_parser(start, end)
+    times = await time_parser(c_time, end)
     text = f"**⬇ Downloaded!**\n🗂 File name: `{name}`\n🏷 Saved to: `nana/downloads/`\n⏲ Downloaded in: {times}"
     await edrep(message, text=text)
 

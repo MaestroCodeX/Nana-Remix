@@ -12,7 +12,7 @@ __HELP__ = """
 Get current weather in your location
 
 ──「 **Weather** 」──
--> `wtr (location)`
+-> `wttr (location)`
 Get current weather in your location.
 Powered by `wttr.in`
 """

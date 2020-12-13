@@ -2,7 +2,7 @@ from os import environ
 from configparser import ConfigParser
 
 config = ConfigParser()
-config.read('config.ini')
+config.read("config.ini")
 
 
 def get_var(name, default=None):
@@ -11,6 +11,6 @@ def get_var(name, default=None):
         return environ.get(name, default)
 
     try:
-        return config.get('nana', name)
+        return config.get("nana", name)
     except AttributeError:
         return None
