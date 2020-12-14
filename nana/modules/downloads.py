@@ -49,7 +49,6 @@ androidfilehost.com`
 """
 
 
-
 @app.on_message(filters.user(AdminSettings) & filters.command("ls", Command))
 async def ls(_, message):
     args = message.text.split(None, 1)
@@ -90,7 +89,7 @@ async def upload_file(client, message):
                 progressdl(d, t, message, c_time, "Downloading...")
             ),
         )
-        
+
     except Exception as e:
         logging.error("Exception occured", exc_info=True)
         logging.error(e)
