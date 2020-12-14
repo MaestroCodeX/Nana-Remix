@@ -104,6 +104,7 @@ async def youtube_download(client, message):
     await message.reply_video(
         f"{ytdl_data['id']}.mp4",
         supports_streaming=True,
+        duration=ytdl_data['duration'],
         caption=ytdl_data["title"],
         thumb=thumbnail,
         progress=lambda d, t: client.loop.create_task(
