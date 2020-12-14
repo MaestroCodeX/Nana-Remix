@@ -105,6 +105,7 @@ async def youtube_download(client, message):
         f"{ytdl_data['id']}.mp4",
         supports_streaming=True,
         caption=ytdl_data["title"],
+        thumb=thumbnail,
         progress=lambda d, t: client.loop.create_task(
             progressdl(d, t, message, c_time, "Downloading...")
         ),
