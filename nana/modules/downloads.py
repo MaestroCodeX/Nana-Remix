@@ -453,7 +453,7 @@ async def progressdl(current, total, event, start, type_of_ps, file_name=None):
                 "{}\n{}\nSpeed: `{}/s`".format(
                     type_of_ps,
                     tmp,
-                    format_bytes((total - current) / (time.time() - start)),
+                    humanbytes((total - current) / (time.time() - start)),
                 )
             )
 
@@ -466,23 +466,11 @@ def humanbytes(size):
     # 2 ** 10 = 1024
     power = 2 ** 10
     raised_to_pow = 0
-    dict_power_n = {0: "", 1: "Ki", 2: "Mi", 3: "Gi", 4: "Ti"}
+    dict_power_n = {0: "", 1: "K", 2: "M", 3: "G", 4: "T"}
     while size > power:
         size /= power
         raised_to_pow += 1
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
-
-
-def format_bytes(size):
-    size = int(size)
-    # 2**10 = 1024
-    power = 1024
-    n = 0
-    power_labels = {0: "", 1: "K", 2: "M", 3: "G", 4: "T"}
-    while size > power:
-        size /= power
-        n += 1
-    return f"{size:.2f} {power_labels[n]+'B'}"
 
 
 async def time_formatter(milliseconds: int) -> str:
