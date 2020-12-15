@@ -444,12 +444,13 @@ async def progressdl(current, total, event, start, type_of_ps, file_name=None):
             humanbytes(total),
             await time_formatter(estimated_total_time),
         )
+        upload_speed = humanbytes((total - current) / (time.time() - start))
         if file_name:
             await event.edit(
                 "{}\nFile Name: `{}`\n{}".format(type_of_ps, file_name, tmp)
             )
         else:
-            await event.edit("{}\n{}".format(type_of_ps, tmp))
+            await event.edit("{}\n{}\nSpeed: `{}`".format(type_of_ps, tmp, upload_speed))
 
 
 def humanbytes(size):
