@@ -59,9 +59,7 @@ async def youtube_download(client, message):
         "prefer_ffmpeg": True,
         "geo_bypass": True,
         "nocheckcertificate": True,
-        "postprocessors": [
-            {"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}
-        ],
+        "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
         "outtmpl": "%(id)s.mp4",
         "logtostderr": False,
         "quiet": True,
@@ -104,7 +102,7 @@ async def youtube_download(client, message):
     await message.reply_video(
         f"{ytdl_data['id']}.mp4",
         supports_streaming=True,
-        duration=ytdl_data['duration'],
+        duration=ytdl_data["duration"],
         caption=ytdl_data["title"],
         thumb=thumbnail,
         progress=lambda d, t: client.loop.create_task(
