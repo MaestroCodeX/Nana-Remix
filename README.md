@@ -28,6 +28,6 @@ community will answer you some questions.
 - [pokurt](https://github.com/pokurt) - English & Spanish & Japanese & German
 - [iMat1n](https://github.com/iMat1n) - Persian
 - [iiiiii1wepfj](https://github.com/iiiiii1wepfj) - Hebrew
-- [breakdowns](https://github.com/breakdowns) - Indonasian
+- [breakdowns](https://github.com/breakdowns) - Indonesian
 - [spkal01](https://github.com/spkal01) - Greek & English
 - [NachABR](https://github.com/NachABR) - Spanish
