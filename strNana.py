@@ -1,12 +1,19 @@
 import asyncio
 
 from pyrogram import Client
+from configparser import ConfigParser, NoSectionError
 
-APP_ID = int(input("enter Telegram APP ID: "))
-API_HASH = input("enter Telegram API HASH: ")
+config = ConfigParser()
+config.read("config.ini")
 
+try:
+    APP_ID = int(config.get("nana", "api_id"))
+    API_HASH = config.get("nana", "api_hash")
+except NoSectionError:
+    APP_ID = int(input("enter Telegram APP ID: "))
+    API_HASH = input("enter Telegram API HASH: ")
 
-async def main(api_id, api_hash):
+async def main(api_id: int, api_hash: str):
     """generate StringSession for the current MemorySession"""
     async with Client(":memory:", api_id=api_id, api_hash=api_hash) as app:
         print((await app.export_session_string()))
