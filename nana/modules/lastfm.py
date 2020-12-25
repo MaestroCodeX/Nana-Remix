@@ -1,7 +1,7 @@
 from pyrogram import filters
 
 from nana import app, Command, AdminSettings
-from nana.helpers.PyroHelpers import ReplyCheck
+from nana.utils.Pyroutils import ReplyCheck
 
 __HELP__ = """
 ──「 **LastFM** 」──

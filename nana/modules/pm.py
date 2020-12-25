@@ -15,7 +15,7 @@ from nana import (
     OwnerName,
     PM_PERMIT,
 )
-from nana.helpers.parser import mention_markdown
+from nana.utils.parser import mention_markdown
 
 if DB_AVAILABLE:
     from nana.modules.database.pm_db import (

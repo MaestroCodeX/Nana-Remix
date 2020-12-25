@@ -16,7 +16,7 @@ from nana import (
     app,
     StartTime,
 )
-from nana.helpers.misc import paginate_modules
+from nana.utils.misc import paginate_modules
 from nana.modules.chats import get_msgc
 from nana.tr_engine.strings import tld
 

@@ -3,7 +3,7 @@ import html
 from pyrogram import filters
 
 from nana import app, Command, edrep
-from nana.helpers.parser import mention_html, mention_markdown
+from nana.utils.parser import mention_html, mention_markdown
 from nana.tr_engine.strings import tld
 
 __MODULE__ = "Admin List"

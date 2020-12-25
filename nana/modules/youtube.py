@@ -26,7 +26,7 @@ from youtube_dl.utils import (
 )
 
 from nana import app, setbot, Command, AdminSettings, edrep
-from nana.helpers.parser import escape_markdown
+from nana.utils.parser import escape_markdown
 from nana.modules.downloads import download_url, progressdl
 
 __MODULE__ = "YouTube"

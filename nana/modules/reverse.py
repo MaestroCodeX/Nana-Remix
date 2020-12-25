@@ -12,7 +12,7 @@ import asyncio
 from pyrogram import filters
 
 from nana import app, Command, logging, AdminSettings, edrep
-from nana.helpers.PyroHelpers import ReplyCheck
+from nana.utils.Pyroutils import ReplyCheck
 
 __MODULE__ = "Reverse"
 __HELP__ = """

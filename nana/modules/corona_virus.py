@@ -3,7 +3,7 @@ import asyncio
 from pyrogram import filters
 
 from nana import Command, app, AdminSettings, edrep
-from nana.helpers.aiohttp_helper import AioHttp
+from nana.utils.aiohttp_helper import AioHttp
 
 __MODULE__ = "Covid"
 __HELP__ = """

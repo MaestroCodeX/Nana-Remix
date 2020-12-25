@@ -3,7 +3,7 @@ from datetime import datetime
 import asyncio
 from pyrogram import filters
 
-from nana.helpers.admincheck import admin_check
+from nana.utils.admincheck import admin_check
 from nana import Owner, app, Command, AdminSettings, edrep
 
 __MODULE__ = "Purges"

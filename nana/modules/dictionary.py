@@ -2,7 +2,7 @@ import asyncio
 from pyrogram import filters
 
 from nana import app, Command, AdminSettings, edrep
-from nana.helpers.aiohttp_helper import AioHttp
+from nana.utils.aiohttp_helper import AioHttp
 
 
 __HELP__ = """

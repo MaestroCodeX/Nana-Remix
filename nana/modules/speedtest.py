@@ -1,6 +1,6 @@
 from pyrogram import filters
 from nana import setbot, AdminSettings, BotUsername, app, Command
-from nana.helpers.PyroHelpers import ReplyCheck
+from nana.utils.Pyroutils import ReplyCheck
 import speedtest
 import re
 

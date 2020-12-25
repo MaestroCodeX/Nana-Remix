@@ -117,7 +117,7 @@ async def update_button(client, query):
         repo.git.reset("--hard")
         repo.git.clean("-fd", "nana/modules/")
         repo.git.clean("-fd", "nana/assistant/")
-        repo.git.clean("-fd", "nana/helpers/")
+        repo.git.clean("-fd", "nana/utils/")
         await client.send_message(Owner, tld("update_successful_force"))
     await update_changelog(changelog)
     await restart_all()

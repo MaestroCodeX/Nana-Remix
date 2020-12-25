@@ -17,7 +17,7 @@ from nana import (
     AdminSettings,
     edrep,
 )
-from nana.helpers.parser import cleanhtml
+from nana.utils.parser import cleanhtml
 from nana.modules.downloads import download_url
 from .downloads import progressdl
 

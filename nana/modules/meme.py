@@ -9,7 +9,7 @@ from pyrogram import filters
 from pyrogram.raw import functions
 
 import nana.modules.meme_strings as meme_strings
-from nana.helpers.PyroHelpers import ReplyCheck
+from nana.utils.Pyroutils import ReplyCheck
 from nana import app, Command, AdminSettings, edrep
 
 __MODULE__ = "Memes"

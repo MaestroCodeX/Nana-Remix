@@ -24,10 +24,10 @@ from nana import (
     AdminSettings,
 )
 from nana.tr_engine.strings import tld
-from nana.helpers.msg_types import Types
-from nana.helpers.string import parse_button, build_keyboard
+from nana.utils.msg_types import Types
+from nana.utils.string import parse_button, build_keyboard
 from nana.modules.pm import welc_txt
-from nana.helpers.sauce import anime_sauce
+from nana.utils.sauce import anime_sauce
 from nana.modules.animelist import shorten
 from nana.modules.database import anime_db as sql
 from nana.modules.stylish import (

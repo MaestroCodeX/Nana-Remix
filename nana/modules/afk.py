@@ -5,8 +5,8 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana import app, setbot, Owner, OwnerName, Command, DB_AVAILABLE, edrep
-from nana.helpers.msg_types import Types, get_message_type
-from nana.helpers.parser import mention_markdown, escape_markdown
+from nana.utils.msg_types import Types, get_message_type
+from nana.utils.parser import mention_markdown, escape_markdown
 
 if DB_AVAILABLE:
     from nana.modules.database.afk_db import set_afk, get_afk

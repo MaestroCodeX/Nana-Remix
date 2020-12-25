@@ -4,8 +4,8 @@ import re
 from pyrogram import filters
 
 from nana import app, Command, AdminSettings, BotUsername, edrep, Owner, setbot
-from nana.helpers.PyroHelpers import ReplyCheck
-from nana.helpers.sauce import airing_sauce, character_sauce, manga_sauce
+from nana.utils.Pyroutils import ReplyCheck
+from nana.utils.sauce import airing_sauce, character_sauce, manga_sauce
 from nana.modules.database import anime_db as sql
 
 

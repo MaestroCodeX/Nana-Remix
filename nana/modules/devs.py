@@ -9,9 +9,9 @@ from io import StringIO
 from pyrogram import filters
 
 from nana import Command, app, edrep, AdminSettings
-from nana.helpers.deldog import deldog
-from nana.helpers.parser import mention_markdown
-from nana.helpers.aiohttp_helper import AioHttp
+from nana.utils.deldog import deldog
+from nana.utils.parser import mention_markdown
+from nana.utils.aiohttp_helper import AioHttp
 
 __MODULE__ = "Devs"
 __HELP__ = """

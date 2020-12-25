@@ -13,7 +13,7 @@ from asyncio import sleep
 from removebg import RemoveBg
 from pyrogram import filters
 from nana import app, Command, remove_bg_api, AdminSettings, edrep
-from nana.helpers.PyroHelpers import ReplyCheck
+from nana.utils.Pyroutils import ReplyCheck
 
 DOWN_PATH = "nana/"
 

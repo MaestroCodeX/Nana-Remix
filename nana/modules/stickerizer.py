@@ -4,7 +4,7 @@ import random
 from pyrogram import filters
 
 from nana import app, Command, AdminSettings, edrep
-from nana.helpers.PyroHelpers import ReplyCheck
+from nana.utils.Pyroutils import ReplyCheck
 
 
 __MODULE__ = "Stickerizer"

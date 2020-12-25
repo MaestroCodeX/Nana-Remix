@@ -2,8 +2,8 @@ from pyrogram import filters
 from asyncio import sleep
 
 from nana import app, Command, AdminSettings, edrep
-from nana.helpers.string import replace_text
-from nana.helpers.aiohttp_helper import AioHttp
+from nana.utils.string import replace_text
+from nana.utils.aiohttp_helper import AioHttp
 
 __MODULE__ = "Urban"
 __HELP__ = """

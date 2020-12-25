@@ -2,7 +2,7 @@ from pyrogram import filters
 from asyncio import sleep
 
 from nana import app, Command, AdminSettings, edrep
-from nana.helpers.expand import expand_url
+from nana.utils.expand import expand_url
 
 __MODULE__ = "Link Expander"
 __HELP__ = """

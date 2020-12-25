@@ -166,7 +166,7 @@ async def updater(client, message):
             repo.git.reset("--hard")
             repo.git.clean("-fd", "nana/modules/")
             repo.git.clean("-fd", "nana/assistant/")
-            repo.git.clean("-fd", "nana/helpers/")
+            repo.git.clean("-fd", "nana/utils/")
             await edrep(message, text="Successfully Updated!\nBot is restarting...")
         await update_changelog(changelog)
         await restart_all()

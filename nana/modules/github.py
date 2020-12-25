@@ -11,8 +11,8 @@ from random import randint
 from pyrogram import filters
 
 from nana import app, Command, AdminSettings, edrep
-from nana.helpers.PyroHelpers import ReplyCheck
-from nana.helpers.aiohttp_helper import AioHttp
+from nana.utils.Pyroutils import ReplyCheck
+from nana.utils.aiohttp_helper import AioHttp
 
 __MODULE__ = "Github"
 __HELP__ = """
