@@ -43,7 +43,7 @@ tags most recent 100 members in a group
 Set chat status to unread
 
 ──「 **Save Message** 」──
--> `s` or `save`
+-> `s`
 Forward a message into Saved Messages
 
 ──「 **Link Message** 」──
@@ -151,10 +151,12 @@ async def revert(client, message):
         )
     )
     photos = await client.get_profile_photos("me")
-    await client.delete_profile_photos(photos[0].file_id)
-    await edrep(message, text="`Identity Reverted`")
-    await sleep(5)
-    await message.delete()
+    await gather(
+        client.delete_profile_photos(photos[0].file_id),
+        edrep(message, text="`Identity Reverted`"),
+        sleep(5),
+        message.delete()
+    )
 
 
 @app.on_message(filters.user(AdminSettings) & filters.command("join", Command))
@@ -170,10 +172,12 @@ async def join_chat(client, message):
         await sleep(2)
         await message.delete()
         return
-    await client.join_chat(text.replace("@", ""))
-    await edrep(message, text=f"joined {text} successfully!")
-    await sleep(2)
-    await message.delete()
+    await gather(
+        client.join_chat(text.replace("@", "")),
+        edrep(message, text=f"joined {text} successfully!"),
+        sleep(2),
+        message.delete()
+    )
 
 
 @app.on_message(filters.user(AdminSettings) & filters.command("leave", Command))
