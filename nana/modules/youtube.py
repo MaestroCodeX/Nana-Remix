@@ -189,7 +189,6 @@ async def youtube_music(client, message):
     try:
         await message.reply_audio(
             f"{ytdl_data['id']}.mp3",
-            supports_streaming=True,
             duration=ytdl_data["duration"],
             caption=ytdl_data["title"],
             thumb=thumbnail,
@@ -200,7 +199,6 @@ async def youtube_music(client, message):
     except FileNotFoundError:
         await message.reply_audio(
             f"{ytdl_data['id']}.mp3",
-            supports_streaming=True,
             duration=ytdl_data["duration"],
             caption=ytdl_data["title"],
             progress=lambda d, t: client.loop.create_task(
