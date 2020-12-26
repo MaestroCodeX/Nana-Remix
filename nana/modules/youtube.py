@@ -1,16 +1,7 @@
-import logging
 import os
-import re
-import shutil
-import subprocess
-import sys
-import traceback
 import time
 
-import pafy
-import requests
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pathlib import Path
 
 from youtube_dl import YoutubeDL
@@ -25,9 +16,8 @@ from youtube_dl.utils import (
     XAttrMetadataError,
 )
 
-from nana import app, setbot, Command, AdminSettings, edrep
-from nana.utils.parser import escape_markdown
-from nana.modules.downloads import download_url, progressdl
+from nana import app, COMMAND_PREFIXES, AdminSettings, edit_or_reply
+from nana.modules.downloads import progressdl
 
 __MODULE__ = "YouTube"
 __HELP__ = """
@@ -43,11 +33,11 @@ Download youtube music, and then send to tg as music.
 """
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("ytdl", Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("ytdl", COMMAND_PREFIXES))
 async def youtube_download(client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
-        await edrep(message, text="missing [url] parameter!!")
+        await edit_or_reply(message, text="missing [url] parameter!!")
         return
     url = args[1]
     opts = {
@@ -67,34 +57,37 @@ async def youtube_download(client, message):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
     except DownloadError as DE:
-        await edrep(message, text=f"`{str(DE)}`")
+        await edit_or_reply(message, text=f"`{str(DE)}`")
         return
     except ContentTooShortError:
-        await edrep(message, text="`The download content was too short.`")
+        await edit_or_reply(message, text="`The download content was too short.`")
         return
     except GeoRestrictedError:
-        await edrep(
+        await edit_or_reply(
             message,
             text="`Video is not available from your geographic location due to geographic restrictions imposed by a website.`",
         )
         return
     except MaxDownloadsReached:
-        await edrep(message, text="`Max-downloads limit has been reached.`")
+        await edit_or_reply(message, text="`Max-downloads limit has been reached.`")
         return
     except PostProcessingError:
-        await edrep(message, text="`There was an error during post processing.`")
+        await edit_or_reply(
+            message, text="`There was an error during post processing.`"
+        )
         return
     except UnavailableVideoError:
-        await edrep(message, text="`Media is not available in the requested format.`")
+        await edit_or_reply(
+            message, text="`Media is not available in the requested format.`"
+        )
         return
     except XAttrMetadataError as XAME:
-        await edrep(message, text=f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
+        await edit_or_reply(message, text=f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
         return
     except ExtractorError:
-        await edrep(message, text="`There was an error during info extraction.`")
-        return
-    except Exception as e:
-        await edrep(message, text=f"{str(type(e)): {str(e)}}")
+        await edit_or_reply(
+            message, text="`There was an error during info extraction.`"
+        )
         return
     thumbnail = Path(f"{ytdl_data['id']}.jpg")
     c_time = time.time()
@@ -125,11 +118,13 @@ async def youtube_download(client, message):
     await message.delete()
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("ytmusic", Command))
+@app.on_message(
+    filters.user(AdminSettings) & filters.command("ytmusic", COMMAND_PREFIXES)
+)
 async def youtube_music(client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
-        await edrep(message, text="missing [url] parameter!")
+        await edit_or_reply(message, text="missing [url] parameter!")
         return
     url = args[1]
     opts = {
@@ -155,34 +150,37 @@ async def youtube_music(client, message):
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
     except DownloadError as DE:
-        await edrep(message, text=f"`{str(DE)}`")
+        await edit_or_reply(message, text=f"`{str(DE)}`")
         return
     except ContentTooShortError:
-        await edrep(message, text="`The download content was too short.`")
+        await edit_or_reply(message, text="`The download content was too short.`")
         return
     except GeoRestrictedError:
-        await edrep(
+        await edit_or_reply(
             message,
             text="`Video is not available from your geographic location due to geographic restrictions imposed by a website.`",
         )
         return
     except MaxDownloadsReached:
-        await edrep(message, text="`Max-downloads limit has been reached.`")
+        await edit_or_reply(message, text="`Max-downloads limit has been reached.`")
         return
     except PostProcessingError:
-        await edrep(message, text="`There was an error during post processing.`")
+        await edit_or_reply(
+            message, text="`There was an error during post processing.`"
+        )
         return
     except UnavailableVideoError:
-        await edrep(message, text="`Media is not available in the requested format.`")
+        await edit_or_reply(
+            message, text="`Media is not available in the requested format.`"
+        )
         return
     except XAttrMetadataError as XAME:
-        await edrep(message, text=f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
+        await edit_or_reply(message, text=f"`{XAME.code}: {XAME.msg}\n{XAME.reason}`")
         return
     except ExtractorError:
-        await edrep(message, text="`There was an error during info extraction.`")
-        return
-    except Exception as e:
-        await edrep(message, text=f"{str(type(e)): {str(e)}}")
+        await edit_or_reply(
+            message, text="`There was an error during info extraction.`"
+        )
         return
     thumbnail = Path(f"{ytdl_data['id']}.jpg")
     c_time = time.time()

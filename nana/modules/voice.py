@@ -8,11 +8,11 @@ from pyrogram import filters
 
 from nana import (
     app,
-    Command,
+    COMMAND_PREFIXES,
     IBM_WATSON_CRED_URL,
     IBM_WATSON_CRED_PASSWORD,
     AdminSettings,
-    edrep,
+    edit_or_reply,
 )
 from nana.modules.downloads import download_reply_nocall
 
@@ -52,7 +52,7 @@ Reply to a voice message to output trascript
 lang = "en"  # Default Language for voice
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("tts", Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("tts", COMMAND_PREFIXES))
 async def voice(client, message):
     global lang
     cmd = message.command
@@ -61,7 +61,7 @@ async def voice(client, message):
     elif message.reply_to_message and len(cmd) == 1:
         v_text = message.reply_to_message.text
     elif len(cmd) == 1:
-        await edrep(
+        await edit_or_reply(
             message,
             text="Usage: `reply to a message or send text arg to convert to voice`",
         )
@@ -85,7 +85,9 @@ async def voice(client, message):
     os.remove("nana/cache/voice.mp3")
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("voicelang", Command))
+@app.on_message(
+    filters.user(AdminSettings) & filters.command("voicelang", COMMAND_PREFIXES)
+)
 async def voicelang(_, message):
     global lang
     temp = lang
@@ -94,20 +96,22 @@ async def voicelang(_, message):
         gTTS("tes", lang=lang)
     except Exception as e:
         print(e)
-        await edrep(message, text="Wrong Language id !")
+        await edit_or_reply(message, text="Wrong Language id !")
         lang = temp
         return
-    await edrep(message, text="Language Set to {}".format(lang))
+    await edit_or_reply(message, text="Language Set to {}".format(lang))
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("stt", Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("stt", COMMAND_PREFIXES))
 async def speach_to_text(client, message):
     start = datetime.now()
     input_str = message.reply_to_message.voice
     if input_str:
         required_file_name = await download_reply_nocall(client, message)
         if IBM_WATSON_CRED_URL is None or IBM_WATSON_CRED_PASSWORD is None:
-            await edrep(message, text="`no ibm watson key provided, aborting...`")
+            await edit_or_reply(
+                message, text="`no ibm watson key provided, aborting...`"
+            )
             await asyncio.sleep(3)
             await message.delete()
         else:
@@ -143,12 +147,12 @@ async def speach_to_text(client, message):
                                     """
                 else:
                     string_to_show = f"<pre>Time Taken<pre>: {ms} seconds\n<pre>No Results Found<pre>"
-                await edrep(message, text=string_to_show, parse_mode="html")
+                await edit_or_reply(message, text=string_to_show, parse_mode="html")
             else:
-                await edrep(message, text=r["error"])
+                await edit_or_reply(message, text=r["error"])
             # now, remove the temporary file
             os.remove(required_file_name)
     else:
-        await edrep(message, text="`Reply to a voice message`")
+        await edit_or_reply(message, text="`Reply to a voice message`")
         await asyncio.sleep(3)
         await message.delete()

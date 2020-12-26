@@ -2,7 +2,7 @@ import html
 
 from pyrogram import filters
 
-from nana import app, Command, edrep
+from nana import app, COMMAND_PREFIXES, edit_or_reply
 from nana.utils.parser import mention_html, mention_markdown
 from nana.tr_engine.strings import tld
 
@@ -27,7 +27,7 @@ Check all bots in spesific chat or current chat
 """
 
 
-@app.on_message(filters.me & filters.command(["admins", "adminlist"], Command))
+@app.on_message(filters.me & filters.command(["admins", "adminlist"], COMMAND_PREFIXES))
 async def adminlist(client, message):
     creator = []
     admin = []
@@ -84,10 +84,10 @@ async def adminlist(client, message):
     if toolong:
         await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
     else:
-        await edrep(message, text=teks)
+        await edit_or_reply(message, text=teks)
 
 
-@app.on_message(filters.me & filters.command("reportadmins", Command))
+@app.on_message(filters.me & filters.command("reportadmins", COMMAND_PREFIXES))
 async def report_admin(client, message):
     await message.delete()
     if len(message.text.split()) >= 2:
@@ -127,7 +127,7 @@ async def report_admin(client, message):
         await client.send_message(message.chat.id, teks, parse_mode="html")
 
 
-@app.on_message(filters.me & filters.command("tagall", Command))
+@app.on_message(filters.me & filters.command("tagall", COMMAND_PREFIXES))
 async def tag_all_users(client, message):
     if len(message.text.split()) >= 2:
         text = message.text.split(None, 1)[1]
@@ -149,7 +149,7 @@ async def tag_all_users(client, message):
     await message.delete()
 
 
-@app.on_message(filters.me & filters.command("botlist", Command))
+@app.on_message(filters.me & filters.command("botlist", COMMAND_PREFIXES))
 async def get_list_bots(client, message):
     replyid = None
     if len(message.text.split()) >= 2:
@@ -178,4 +178,4 @@ async def get_list_bots(client, message):
     if replyid:
         await client.send_message(message.chat.id, teks, reply_to_message_id=replyid)
     else:
-        await edrep(message, text=teks)
+        await edit_or_reply(message, text=teks)

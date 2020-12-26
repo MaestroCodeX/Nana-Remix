@@ -1,6 +1,5 @@
 import os
 import re
-import shutil
 import subprocess
 import sys
 import traceback
@@ -8,7 +7,7 @@ from io import StringIO
 
 from pyrogram import filters
 
-from nana import Command, app, edrep, AdminSettings
+from nana import COMMAND_PREFIXES, app, edit_or_reply, AdminSettings
 from nana.utils.deldog import deldog
 from nana.utils.parser import mention_markdown
 from nana.utils.aiohttp_helper import AioHttp
@@ -55,7 +54,7 @@ async def aexec(code, client, message):
     return await locals()["__aexec"](client, message)
 
 
-@app.on_message(filters.me & filters.command("reveal", Command))
+@app.on_message(filters.me & filters.command("reveal", COMMAND_PREFIXES))
 async def sd_reveal(client, message):
     cmd = message.command
     self_tag = " ".join(cmd[1:])
@@ -78,7 +77,7 @@ async def sd_reveal(client, message):
     filters.user(AdminSettings)
     & ~filters.forwarded
     & ~filters.via_bot
-    & filters.command("eval", Command)
+    & filters.command("eval", COMMAND_PREFIXES)
 )
 async def executor(client, message):
     try:
@@ -125,10 +124,10 @@ async def executor(client, message):
         os.remove(filename)
         await message.delete()
     else:
-        await edrep(message, text=final_output)
+        await edit_or_reply(message, text=final_output)
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("ip", Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("ip", COMMAND_PREFIXES))
 async def public_ip(_, message):
     j = await AioHttp().get_json("http://ip-api.com/json")
     stats = f"**ISP {j['isp']}:**\n"
@@ -139,18 +138,18 @@ async def public_ip(_, message):
     stats += f"**Lattitude:** `{j['lat']}`\n"
     stats += f"**Longitude:** `{j['lon']}`\n"
     stats += f"**Time Zone:** `{j['timezone']}`"
-    await edrep(message, text=stats, parse_mode="markdown")
+    await edit_or_reply(message, text=stats, parse_mode="markdown")
 
 
 @app.on_message(
     filters.user(AdminSettings)
     & ~filters.forwarded
     & ~filters.via_bot
-    & filters.command("sh", Command)
+    & filters.command("sh", COMMAND_PREFIXES)
 )
 async def terminal(client, message):
     if len(message.text.split()) == 1:
-        await edrep(message, text="Usage: `sh ping -c 5 google.com`")
+        await edit_or_reply(message, text="Usage: `sh ping -c 5 google.com`")
         return
     args = message.text.split(None, 1)
     teks = args[1]
@@ -165,7 +164,7 @@ async def terminal(client, message):
                 )
             except Exception as err:
                 print(err)
-                await edrep(
+                await edit_or_reply(
                     message,
                     text="""
 **Input:**
@@ -193,7 +192,7 @@ async def terminal(client, message):
             errors = traceback.format_exception(
                 etype=exc_type, value=exc_obj, tb=exc_tb
             )
-            await edrep(
+            await edit_or_reply(
                 message,
                 text="""**Input:**\n```{}```\n\n**Error:**\n```{}```""".format(
                     teks, "".join(errors)
@@ -216,30 +215,32 @@ async def terminal(client, message):
             )
             os.remove("nana/cache/output.txt")
             return
-        await edrep(
+        await edit_or_reply(
             message,
             text="""**Input:**\n```{}```\n\n**Output:**\n```{}```""".format(
                 teks, output
             ),
         )
     else:
-        await edrep(
+        await edit_or_reply(
             message, text="**Input: **\n`{}`\n\n**Output: **\n`No Output`".format(teks)
         )
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command(["log"], Command))
+@app.on_message(
+    filters.user(AdminSettings) & filters.command(["log"], COMMAND_PREFIXES)
+)
 async def log(_, message):
     f = open("nana/logs/error.log", "r")
     data = await deldog(f.read())
-    await edrep(
+    await edit_or_reply(
         message,
         text=f"`Your recent logs stored here : `{data}",
         disable_web_page_preview=True,
     )
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("dc", Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("dc", COMMAND_PREFIXES))
 async def dc_id_check(_, message):
     user = message.from_user
     if message.reply_to_message:
@@ -280,10 +281,10 @@ async def dc_id_check(_, message):
         )
     else:
         text = "{}'s assigned datacenter is **Unknown**".format(user)
-    await edrep(message, text=text)
+    await edit_or_reply(message, text=text)
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("id", Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("id", COMMAND_PREFIXES))
 async def get_id(_, message):
     file_id = None
     user_id = None
@@ -343,7 +344,7 @@ async def get_id(_, message):
         else:
             user_detail = f"**User ID**: `{message.reply_to_message.from_user.id}`\n"
         user_detail += f"**Message ID**: `{message.reply_to_message.message_id}`"
-        await edrep(message, text=user_detail)
+        await edit_or_reply(message, text=user_detail)
     elif file_id:
         if rep.forward_from:
             user_detail = (
@@ -353,6 +354,6 @@ async def get_id(_, message):
             user_detail = f"**User ID**: `{message.reply_to_message.from_user.id}`\n"
         user_detail += f"**Message ID**: `{message.reply_to_message.message_id}`\n\n"
         user_detail += file_id
-        await edrep(message, text=user_detail)
+        await edit_or_reply(message, text=user_detail)
     else:
-        await edrep(message, text=f"**Chat ID**: `{message.chat.id}`")
+        await edit_or_reply(message, text=f"**Chat ID**: `{message.chat.id}`")

@@ -7,7 +7,7 @@ from pyrogram.types import User
 from pyrogram.raw import functions
 from pyrogram.errors import PeerIdInvalid
 
-from nana import app, Command, sw_api, AdminSettings, edrep
+from nana import app, COMMAND_PREFIXES, SPAMWATCH_API, AdminSettings, edit_or_reply
 
 __MODULE__ = "Whois"
 __HELP__ = """
@@ -51,7 +51,7 @@ def ProfilePicUpdate(user_pic):
     return datetime.fromtimestamp(user_pic[0].date).strftime("%d.%m.%Y, %H:%M:%S")
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("info", Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("info", COMMAND_PREFIXES))
 async def whois(client, message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:
@@ -70,7 +70,7 @@ async def whois(client, message):
     try:
         user = await client.get_users(get_user)
     except PeerIdInvalid:
-        await edrep(message, text="I don't know that User.")
+        await edit_or_reply(message, text="I don't know that User.")
         sleep(2)
         await message.delete()
         return
@@ -79,11 +79,11 @@ async def whois(client, message):
     common = await GetCommon(client, user.id)
 
     if user:
-        if sw_api:
-            sw = spamwatch.Client(sw_api)
+        if SPAMWATCH_API:
+            sw = spamwatch.Client(SPAMWATCH_API)
             status = sw.get_ban(user.id)
             if status == False:
-                await edrep(
+                await edit_or_reply(
                     message,
                     text=f"""
 **About {user.mention}**:
@@ -97,7 +97,7 @@ async def whois(client, message):
                     disable_web_page_preview=True,
                 )
             else:
-                await edrep(
+                await edit_or_reply(
                     message,
                     text=f"""
 **About {user.mention}**:
@@ -114,7 +114,7 @@ async def whois(client, message):
                 )
             return
         else:
-            await edrep(
+            await edit_or_reply(
                 message,
                 text=f"""
 **About {user.mention}**:
