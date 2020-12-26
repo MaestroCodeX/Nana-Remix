@@ -237,7 +237,9 @@ async def report_some_errors(client, query):
     text = "Hi @DeprecatedUser, i got an error for you.\nPlease take a look and fix it if possible.\n\nThank you ❤️"
     err = query.message.text
     open("nana/cache/errors.txt", "w").write(err)
-    await query.message.edit_reply_markup(reply_markup=None)
-    await app.send_document("nanabotsupport", "nana/cache/errors.txt", caption=text)
+    await asyncio.gather(
+        query.message.edit_reply_markup(reply_markup=None),
+        app.send_document("nanabotsupport", "nana/cache/errors.txt", caption=text),
+        client.answer_callback_query(query.id, "Report was sent!")
+    )
     os.remove("nana/cache/errors.txt")
-    await client.answer_callback_query(query.id, "Report was sent!")

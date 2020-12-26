@@ -48,59 +48,6 @@ androidfilehost.com`
 """
 
 
-@app.on_message(filters.user(AdminSettings) & filters.command("ls", COMMAND_PREFIXES))
-async def ls(_, message):
-    args = message.text.split(None, 1)
-    basepath = "nana/{}".format(args[1]) if len(args) == 2 else "nana/"
-    directory = "".join(
-        "\n{}".format(entry)
-        for entry in os.listdir(basepath)
-        if os.path.isdir(os.path.join(basepath, entry))
-    )
-
-    listfile = "".join(
-        "\n{}".format(entry)
-        for entry in os.listdir(basepath)
-        if os.path.isfile(os.path.join(basepath, entry))
-    )
-
-    await edit_or_reply(
-        message,
-        text="**List directory :**`{}`\n**List file :**`{}`".format(
-            directory, listfile
-        ),
-    )
-
-
-@app.on_message(
-    filters.user(AdminSettings) & filters.command("upload", COMMAND_PREFIXES)
-)
-async def upload_file(client, message):
-    args = message.text.split(None, 1)
-    if len(args) == 1:
-        await edit_or_reply(message, text="usage : upload (path)")
-        return
-    c_time = time.time()
-    path = "nana/{}".format(args[1])
-    try:
-        await app.send_document(
-            message.chat.id,
-            path,
-            progress=lambda d, t: client.loop.create_task(
-                progressdl(d, t, message, c_time, "Downloading...")
-            ),
-        )
-
-    except Exception as e:
-        logging.error("Exception occured", exc_info=True)
-        logging.error(e)
-        await edit_or_reply(message, text="`File not found!`")
-        return
-    await edit_or_reply(message, text="`Success!`")
-    await asyncio.sleep(5)
-    await client.delete_messages(message.chat.id, message.message_id)
-
-
 async def time_parser(start, end):
     time_end = end - start
     month = time_end // 2678400
@@ -173,9 +120,9 @@ async def download_from_url(_, message):
     except FileNotFoundError:
         await edit_or_reply(message, text="Invalid download path in config!")
         return
-    await edit_or_reply(message, text="Downloading...")
+    dl_msg = await edit_or_reply(message, text="Downloading...")
     download = await download_url(url, file_name)
-    await edit_or_reply(message, text=download)
+    await dl_msg.edit(download)
 
 
 @app.on_message(
@@ -193,7 +140,6 @@ async def dssownload_from_telegram(client, message):
 )
 async def direct_link_generator(_, message):
     args = message.text.split(None, 1)
-    await edit_or_reply(message, text="`Processing...`")
     if len(args) == 1:
         await edit_or_reply(message, text="Write any args here!")
         return
