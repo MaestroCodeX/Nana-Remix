@@ -112,8 +112,7 @@ async def get_myself(client, message):
     except ConnectionError:
         await message.reply("Bot is currently turned off!")
         return
-    getphoto = await client.get_profile_photos(me.id)
-    getpp = None if len(getphoto) == 0 else getphoto[0].file_id
+    getpp = await client.download_media(me.photo.big_file_id, file_name="nana/downloads/pfp.png")
     text = "**ℹ️ Your profile:**\n"
     text += "First name: {}\n".format(me.first_name)
     if me.last_name:
@@ -128,11 +127,13 @@ async def get_myself(client, message):
         [[InlineKeyboardButton("Hide phone number", callback_data="hide_number")]]
     )
     if me.photo:
-        await client.send_photo(
-            message.chat.id, photo=getpp, caption=text, reply_markup=button
+        await message.reply_photo(
+            photo=getpp, caption=text, reply_markup=button
         )
     else:
         await message.reply(text, reply_markup=button)
+    if os.path.exists(getpp):
+        os.remove(getpp)
 
 
 # For callback query button
