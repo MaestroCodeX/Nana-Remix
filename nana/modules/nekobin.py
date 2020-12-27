@@ -96,4 +96,4 @@ async def get_paste_(_, message):
         await edit_or_reply(message, text="Is that even a paste url?")
         return
     resp = await AioHttp().get_text(raw_link)
-    await edit_or_reply(message, text=f"**URL content** :\n`{resp}`")
+    await edit_or_reply(message, text=f"**URL content**:\n`{resp}`")

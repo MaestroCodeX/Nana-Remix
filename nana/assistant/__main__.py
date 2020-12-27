@@ -1,5 +1,6 @@
 import os
 from platform import python_version
+import asyncio
 
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -112,7 +113,9 @@ async def get_myself(client, message):
     except ConnectionError:
         await message.reply("Bot is currently turned off!")
         return
-    getpp = await client.download_media(me.photo.big_file_id, file_name="nana/downloads/pfp.png")
+    getpp = await client.download_media(
+        me.photo.big_file_id, file_name="nana/downloads/pfp.png"
+    )
     text = "**ℹ️ Your profile:**\n"
     text += "First name: {}\n".format(me.first_name)
     if me.last_name:
@@ -127,9 +130,7 @@ async def get_myself(client, message):
         [[InlineKeyboardButton("Hide phone number", callback_data="hide_number")]]
     )
     if me.photo:
-        await message.reply_photo(
-            photo=getpp, caption=text, reply_markup=button
-        )
+        await message.reply_photo(photo=getpp, caption=text, reply_markup=button)
     else:
         await message.reply(text, reply_markup=button)
     if os.path.exists(getpp):
@@ -240,6 +241,6 @@ async def report_some_errors(client, query):
     await asyncio.gather(
         query.message.edit_reply_markup(reply_markup=None),
         app.send_document("nanabotsupport", "nana/cache/errors.txt", caption=text),
-        client.answer_callback_query(query.id, "Report was sent!")
+        client.answer_callback_query(query.id, "Report was sent!"),
     )
     os.remove("nana/cache/errors.txt")

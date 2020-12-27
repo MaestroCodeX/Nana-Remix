@@ -99,6 +99,7 @@ async def terminal(client, message):
                 shell, stdout=subprocess.PIPE, stderr=subprocess.PIPE
             )
         except Exception as err:
+            print(err)
             exc_type, exc_obj, exc_tb = sys.exc_info()
             errors = traceback.format_exception(
                 etype=exc_type, value=exc_obj, tb=exc_tb

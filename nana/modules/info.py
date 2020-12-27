@@ -15,7 +15,6 @@ __HELP__ = """
 -> `info` `@username` or `user_id`
 -> `info` "reply to a text"
 To find information about a person.
-
 """
 
 
@@ -82,7 +81,7 @@ async def whois(client, message):
         if SPAMWATCH_API:
             sw = spamwatch.Client(SPAMWATCH_API)
             status = sw.get_ban(user.id)
-            if status == False:
+            if not status:
                 await edit_or_reply(
                     message,
                     text=f"""

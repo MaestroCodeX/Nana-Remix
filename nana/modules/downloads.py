@@ -1,13 +1,10 @@
-import asyncio
 import json
-import logging
 import math
 import os
 import re
 import time
 import urllib.parse
 from random import choice
-from typing import Dict, Tuple
 
 import requests
 from bs4 import BeautifulSoup

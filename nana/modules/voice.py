@@ -22,24 +22,24 @@ Convert text to voice chat.
 
 ──「 **Text-To-Speech** 」──
 -> `tts (text)`
-Convert text to voice by google 
+Convert text to voice by google
 
 ──「 **Voice Language** 」──
 -> `voicelang (lang_id)`
 Set language of your voice,Some Available Voice lang:
 `ID| Language  | ID| Language`
 `af: Afrikaans | ar: Arabic
-cs: Czech     | de: German  
+cs: Czech     | de: German
 el: Greek     | en: English
-es: Spanish   | fr: French  
+es: Spanish   | fr: French
 hi: Hindi     | id: Indonesian
 is: Icelandic | it: Italian
 ja: Japanese  | jw: Javanese
-ko: Korean    | la: Latin   
-my: Myanmar   | ne: Nepali  
+ko: Korean    | la: Latin
+my: Myanmar   | ne: Nepali
 nl: Dutch     | pt: Portuguese
-ru: Russian   | su: Sundanese 
-sv: Swedish   | th: Thai 
+ru: Russian   | su: Sundanese
+sv: Swedish   | th: Thai
 tl: Filipino  | tr: Turkish
 vi: Vietname  |
 zh-cn: Chinese (Mandarin/China)
@@ -49,6 +49,7 @@ zh-tw: Chinese (Mandarin/Taiwan)`
 -> `stt`
 Reply to a voice message to output trascript
 """
+
 lang = "en"  # Default Language for voice
 
 

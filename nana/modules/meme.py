@@ -94,7 +94,8 @@ async def scam(client, message):
     if len(input_str) == 1:  # Let bot decide action and time
         scam_action = random.choice(meme_strings.options)
         scam_time = random.randint(30, 60)
-    elif len(input_str) == 2:  # User decides time/action, bot decides the other.
+    # User decides time/action, bot decides the other.
+    elif len(input_str) == 2:
         try:
             scam_action = str(input_str[1]).lower()
             scam_time = random.randint(30, 60)

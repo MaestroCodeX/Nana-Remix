@@ -1,4 +1,3 @@
-import asyncio
 import os
 import time
 
@@ -388,9 +387,7 @@ async def gdrive_stuff(client, message):
         upload.InsertPermission({"type": "anyone", "value": "anyone", "role": "reader"})
         await edit_or_reply(
             message,
-            text="Done!\nDownload link: [{}]({})".format(
-                nama, upload["alternateLink"]
-            ),
+            text="Done!\nDownload link: [{}]({})".format(nama, upload["alternateLink"]),
         )
         os.remove("nana/downloads/" + nama)
     else:

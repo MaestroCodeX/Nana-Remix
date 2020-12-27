@@ -26,11 +26,11 @@ This module can help you steal sticker, just reply that sticker, type kang, and 
 -> `kang`
 Reply a sticker/image, and sticker is your.
 
-──「 **Set Sticker Pack** 」── -> /setsticker This command only for Assistant bot, to set your sticker pack. When 
-sticker pack is full, type that command and select another or create new from @Stickers! 
+──「 **Set Sticker Pack** 」── -> /setsticker This command only for Assistant bot, to set your sticker pack. When
+sticker pack is full, type that command and select another or create new from @Stickers!
 
--> /setanimation This command is used to set animated pack through Assistant bot. When sticker pack is full, 
-type that command and select another or create new from @Stickers! 
+-> /setanimation This command is used to set animated pack through Assistant bot. When sticker pack is full,
+type that command and select another or create new from @Stickers!
 
 """
 

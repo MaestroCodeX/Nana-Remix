@@ -53,6 +53,7 @@ async def telegraph(client, message):
         await edit_or_reply(
             message,
             text=f"**Document passed to: [Telegra.ph](https://telegra.ph{response[0]})**",
+            disable_web_page_preview=True,
         )
     finally:
         os.remove(download_location)

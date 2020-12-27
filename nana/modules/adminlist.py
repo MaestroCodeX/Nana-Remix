@@ -45,7 +45,7 @@ async def adminlist(client, message):
     async for a in alladmins:
         try:
             nama = a.user.first_name + " " + a.user.last_name
-        except:
+        except BaseException:
             nama = a.user.first_name
         if nama is None:
             nama = "☠️ Deleted account"
@@ -164,7 +164,7 @@ async def get_list_bots(client, message):
     async for a in getbots:
         try:
             nama = a.user.first_name + " " + a.user.last_name
-        except:
+        except BaseException:
             nama = a.user.first_name
         if nama is None:
             nama = tld("botlist_one")

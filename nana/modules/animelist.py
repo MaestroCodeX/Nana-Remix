@@ -189,7 +189,7 @@ async def manga_search(client, message):
             try:
                 await message.delete()
                 await client.send_photo(message.chat.id, photo=image, caption=ms_g)
-            except:
+            except BaseException:
                 ms_g += f" [〽️]({image})"
                 await edit_or_reply(message, text=ms_g)
         else:

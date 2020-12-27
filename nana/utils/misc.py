@@ -46,5 +46,4 @@ def paginate_modules(_page_n, module_dict, prefix, chat=None):
         pairs.append((modules[-1],))
     elif calc == 2:
         pairs.append((modules[-1],))
-
     return pairs

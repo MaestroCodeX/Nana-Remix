@@ -28,8 +28,8 @@ And that mentioned will notify you by your Assistant.
 If you're restart your bot, all counter and data in cache will be reset.
 But you will still in afk, and always reply when got mentioned.
 
-──「 **Set AFK status** 」── -> `afk (*reason)` Set yourself to afk, give a reason if need. When someone tag you, 
-you will says in afk with reason, and that mentioned will sent in your assistant PM. 
+──「 **Set AFK status** 」── -> `afk (*reason)` Set yourself to afk, give a reason if need. When someone tag you,
+you will says in afk with reason, and that mentioned will sent in your assistant PM.
 
 To exit from afk status, send anything to anywhere, exclude PM and saved message.
 

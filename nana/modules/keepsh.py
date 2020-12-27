@@ -16,7 +16,7 @@ Mirror any telegram file to keep.sh
 
 ──「 **Transfer telegram file** 」──
 -> `keepsh`
-Reply to telegram file for mirroring to keep.sh 
+Reply to telegram file for mirroring to keep.sh
 
 """
 
@@ -36,12 +36,12 @@ async def tfsh(client, message):
     os.rename(
         r"nana/downloads/{}".format(name), r"nana/downloads/{}".format(name_file_upload)
     )
-    print(name_file_upload)
     await edit_or_reply(
         message,
         text=await send_to_keepsh(
             "nana/downloads/{}".format(name_file_upload), message, name_file_upload
         ),
+        disable_web_page_preview=True,
     )
     os.remove("nana/downloads/{}".format(name_file_upload))
     return
