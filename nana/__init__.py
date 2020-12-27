@@ -55,7 +55,6 @@ ASSISTANT_BOT_TOKEN = get_var("ASSISTANT_BOT_TOKEN", None)
 COMMAND_PREFIXES = get_var("Command", "! . - ^").split()
 NANA_WORKER = int(get_var("NANA_WORKER", 8))
 ASSISTANT_WORKER = int(get_var("ASSISTANT_WORKER", 2))
-
 # APIs
 THUMBNAIL_API = get_var("thumbnail_API", None)
 SCREENSHOTLAYER_API = get_var("screenshotlayer_API", None)
